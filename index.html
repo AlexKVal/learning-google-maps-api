@@ -1,46 +1,48 @@
 <html>
- <head>
-   <style type="text/css">
-     html, body { height: 100%; margin: 0; padding: 0; }
-     #map { height: 100%; }
-   </style>
- </head>
- <body>
-   <div id="map"></div>
-   <script>
-     var aCenter = { lat: -33.9, lng: 151.2};
-     var beaches = [
-       ['Bondi Beach', -33.890542, 151.274856, 4],
-       ['Coogee Beach', -33.923036, 151.259052, 5],
-       ['Cronulla Beach', -34.028249, 151.157507, 3],
-       ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-       ['Maroubra Beach', -33.950198, 151.259302, 1]
-     ];
+  <head>
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
 
-     function showMarkers(map) {
-       beaches.forEach(function(beach) {
-         new google.maps.Marker({
-           map: map,
-           position: {lat: beach[1], lng: beach[2]},
-           title: beach[0],
-           zIndex: beach[3]
-         })
-       })
-     }
+    <script>
+    var map;
+    var markers = [];
+    var aCenter = { lat: -33.9, lng: 151.2};
+    var beaches = [
+      ['Bondi Beach', -33.890542, 151.274856, 4],
+      ['Coogee Beach', -33.923036, 151.259052, 5],
+      ['Cronulla Beach', -34.028249, 151.157507, 3],
+      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+      ['Maroubra Beach', -33.950198, 151.259302, 1]
+    ];
 
-     var map;
+    function showMarkers(map) {
+      beaches.forEach(function(beach) {
+        new google.maps.Marker({
+          map: map,
+          position: {lat: beach[1], lng: beach[2]},
+          title: beach[0],
+          zIndex: beach[3]
+        })
+      })
+    }
 
-     function initMap() {
-       map = new google.maps.Map(document.getElementById("map"), {
-         center: aCenter,
-         zoom: 10
-       });
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: aCenter,
+        zoom: 10
+      });
 
-       showMarkers(map)
-     }
-   </script>
-   <script async defer
-     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBONpnUbTddD57RkMLz401RuuvCmCBVqQ&v=3&callback=initMap">
-   </script>
- </body>
+      showMarkers(map)
+    }
+    </script>
+
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBONpnUbTddD57RkMLz401RuuvCmCBVqQ&v=3&callback=initMap">
+    </script>
+  </body>
 </html>
