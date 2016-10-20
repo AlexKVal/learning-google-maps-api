@@ -42,19 +42,15 @@
       ['Maroubra Beach', -33.950198, 151.259302, 1]
     ];
 
-    function showMarkers(map) {
+    function generateMarkers(map) {
       var infoWindow = new google.maps.InfoWindow()
-      var bounds = new google.maps.LatLngBounds()
 
-      beaches.forEach(function(beach) {
+      return beaches.map(function(beach) {
         var marker = new google.maps.Marker({
-          map: map,
           position: {lat: beach[1], lng: beach[2]},
           title: beach[0],
           zIndex: beach[3]
         })
-
-        bounds.extend(marker.position)
 
         marker.addListener('click', function() {
           placeInfoWindow(this, infoWindow, map)
@@ -62,8 +58,6 @@
 
         return marker
       })
-
-      map.fitBounds(bounds)
     }
 
     function placeInfoWindow(marker, infoWindow, map) {
@@ -81,13 +75,25 @@
 
     function initMap() {
       var map = new google.maps.Map(document.getElementById("map"), {
-        center: aCenter
+        center: aCenter,
+        zoom: 10
       });
 
-      showMarkers(map)
+      var markers = generateMarkers(map)
 
       document.querySelector('#show-listings').addEventListener('click', showListings)
       document.querySelector('#hide-listings').addEventListener('click', hideListings)
+
+      function showListings() {
+        var bounds = new google.maps.LatLngBounds()
+
+        markers.forEach(function(marker) {
+          marker.setMap(map)
+          bounds.extend(marker.position)
+        })
+
+        map.fitBounds(bounds)
+      }
     }
     </script>
 
