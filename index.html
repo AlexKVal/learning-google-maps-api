@@ -43,7 +43,7 @@
     ];
 
     function showMarkers(map) {
-      var largeInfoWindow = new google.maps.InfoWindow()
+      var infoWindow = new google.maps.InfoWindow()
       var bounds = new google.maps.LatLngBounds()
 
       beaches.forEach(function(beach) {
@@ -85,6 +85,9 @@
       });
 
       showMarkers(map)
+
+      document.querySelector('#show-listings').addEventListener('click', showListings)
+      document.querySelector('#hide-listings').addEventListener('click', hideListings)
     }
     </script>
 
