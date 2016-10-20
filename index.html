@@ -1,0 +1,35 @@
+<html>
+ <head>
+   <style type="text/css">
+     html, body { height: 100%; margin: 0; padding: 0; }
+     #map { height: 100%; }
+   </style>
+ </head>
+ <body>
+   <div id="map"></div>
+   <script>
+     var map;
+
+     function initMap() {
+       map = new google.maps.Map(document.getElementById("map"), {
+         center: {
+           lat: 40.7413549,
+           lng: -73.99802439999996
+         },
+         zoom: 12
+       });
+
+       var somewhere1 = {lat: 40.741354, lng: -73.99802439999};
+
+       var marker1 = new google.maps.Marker({
+         map: map,
+         position: somewhere1,
+         title: 'Somewhere-1 Marker'
+       });
+     }
+   </script>
+   <script async defer
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBONpnUbTddD57RkMLz401RuuvCmCBVqQ&v=3&callback=initMap">
+   </script>
+ </body>
+</html>
