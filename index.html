@@ -8,33 +8,35 @@
  <body>
    <div id="map"></div>
    <script>
+     var aCenter = { lat: -33.9, lng: 151.2};
+     var beaches = [
+       ['Bondi Beach', -33.890542, 151.274856, 4],
+       ['Coogee Beach', -33.923036, 151.259052, 5],
+       ['Cronulla Beach', -34.028249, 151.157507, 3],
+       ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+       ['Maroubra Beach', -33.950198, 151.259302, 1]
+     ];
+
+     function showMarkers(map) {
+       beaches.forEach(function(beach) {
+         new google.maps.Marker({
+           map: map,
+           position: {lat: beach[1], lng: beach[2]},
+           title: beach[0],
+           zIndex: beach[3]
+         })
+       })
+     }
+
      var map;
 
      function initMap() {
        map = new google.maps.Map(document.getElementById("map"), {
-         center: {
-           lat: 40.7413549,
-           lng: -73.99802439999996
-         },
-         zoom: 12
+         center: aCenter,
+         zoom: 10
        });
 
-       var somewhere1 = {lat: 40.741354, lng: -73.99802439999};
-
-       var marker1 = new google.maps.Marker({
-         map: map,
-         position: somewhere1,
-         title: 'Somewhere-1 Marker'
-       });
-
-       var infoWindow1 = new google.maps.InfoWindow({
-         content: "Some pretty content should be here. But I will use lorem ipsum for now."
-           + " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-       })
-
-       marker1.addListener('click', function() {
-         infoWindow1.open(map, marker1)
-       })
+       showMarkers(map)
      }
    </script>
    <script async defer
