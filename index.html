@@ -9,9 +9,6 @@
     <div id="map"></div>
 
     <script>
-    var map;
-    var markers = [];
-
     var aCenter = { lat: -33.9, lng: 151.2};
     var beaches = [
       ['Bondi Beach', -33.890542, 151.274856, 4],
@@ -21,8 +18,11 @@
       ['Maroubra Beach', -33.950198, 151.259302, 1]
     ];
 
-    function showMarkers(map, infoWindow) {
-      return beaches.map(function(beach) {
+    function showMarkers(map) {
+      var largeInfoWindow = new google.maps.InfoWindow()
+      var bounds = new google.maps.LatLngBounds()
+
+      beaches.forEach(function(beach) {
         var marker = new google.maps.Marker({
           map: map,
           position: {lat: beach[1], lng: beach[2]},
@@ -30,12 +30,16 @@
           zIndex: beach[3]
         })
 
+        bounds.extend(marker.position)
+
         marker.addListener('click', function() {
           placeInfoWindow(this, infoWindow, map)
         })
 
         return marker
       })
+
+      map.fitBounds(bounds)
     }
 
     function placeInfoWindow(marker, infoWindow, map) {
@@ -52,16 +56,11 @@
     }
 
     function initMap() {
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: aCenter,
-        zoom: 10
+      var map = new google.maps.Map(document.getElementById("map"), {
+        center: aCenter
       });
 
-      var largeInfoWindow = new google.maps.InfoWindow({
-        content: 'Some content'
-      })
-
-      markers = showMarkers(map, largeInfoWindow)
+      showMarkers(map)
     }
     </script>
 
