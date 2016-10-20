@@ -2,11 +2,35 @@
   <head>
     <style type="text/css">
       html, body { height: 100%; margin: 0; padding: 0; }
-      #map { height: 100%; }
+      #map {
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 362px;
+      }
+
+      .options-box {
+        height: 100%;
+        width: 340px;
+        padding: 10px 10px 30px 10px;
+        line-height: 35px;
+        border: 1px solid #999;
+        border-radius: 3px;
+        text-align: left;
+        background: #fff;
+      }
     </style>
   </head>
   <body>
-    <div id="map"></div>
+    <div class="container">
+      <div class="options-box">
+        <h1>Find your new NYC home</h1>
+        <input type="button" value="Show Listings" id="show-listings">
+        <input type="button" value="Hide Listings" id="hide-listings">
+      </div>
+      <div id="map"></div>
+    </div>
 
     <script>
     var aCenter = { lat: -33.9, lng: 151.2};
