@@ -31,10 +31,23 @@
         })
 
         marker.addListener('click', function() {
-          infoWindow.open(map, marker)
+          placeInfoWindow(this, infoWindow, map)
         })
 
         return marker
+      })
+    }
+
+    function placeInfoWindow(marker, infoWindow, map) {
+      if (infoWindow.marker === marker) return;
+
+      infoWindow.marker = marker
+      infoWindow.setContent('<div>' + marker.title + '</div>')
+
+      infoWindow.open(map, marker)
+
+      infoWindow.addListener('closeclick', function() {
+        infoWindow.marker = null
       })
     }
 
