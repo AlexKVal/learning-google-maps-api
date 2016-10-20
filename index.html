@@ -94,6 +94,12 @@
 
         map.fitBounds(bounds)
       }
+
+      function hideListings() {
+        markers.forEach(function(marker) {
+          marker.setMap(null)
+        })
+      }
     }
     </script>
 
