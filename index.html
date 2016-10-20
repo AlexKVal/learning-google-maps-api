@@ -21,8 +21,8 @@
     ];
 
     function showMarkers(map) {
-      beaches.forEach(function(beach) {
-        new google.maps.Marker({
+      return beaches.map(function(beach) {
+        return new google.maps.Marker({
           map: map,
           position: {lat: beach[1], lng: beach[2]},
           title: beach[0],
@@ -37,7 +37,7 @@
         zoom: 10
       });
 
-      showMarkers(map)
+      markers = showMarkers(map)
     }
     </script>
 
