@@ -11,6 +11,7 @@
     <script>
     var map;
     var markers = [];
+
     var aCenter = { lat: -33.9, lng: 151.2};
     var beaches = [
       ['Bondi Beach', -33.890542, 151.274856, 4],
@@ -20,14 +21,20 @@
       ['Maroubra Beach', -33.950198, 151.259302, 1]
     ];
 
-    function showMarkers(map) {
+    function showMarkers(map, infoWindow) {
       return beaches.map(function(beach) {
-        return new google.maps.Marker({
+        var marker = new google.maps.Marker({
           map: map,
           position: {lat: beach[1], lng: beach[2]},
           title: beach[0],
           zIndex: beach[3]
         })
+
+        marker.addListener('click', function() {
+          infoWindow.open(map, marker)
+        })
+
+        return marker
       })
     }
 
@@ -37,7 +44,11 @@
         zoom: 10
       });
 
-      markers = showMarkers(map)
+      var largeInfoWindow = new google.maps.InfoWindow({
+        content: 'Some content'
+      })
+
+      markers = showMarkers(map, largeInfoWindow)
     }
     </script>
 
