@@ -94,16 +94,43 @@
 
       var markers = generateMarkers(map)
 
+      var theOnlyPolygon = null;
+
       var drawingManager = new google.maps.drawing.DrawingManager({
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
         drawingControl: true,
         drawingControlOptions: {
           position: google.maps.ControlPosition.TOP_LEFT,
           drawingModes: [
-            'marker', 'circle', 'polygon', 'polyline', 'rectangle'
+            'polygon'
           ]
         }
       })
+
+      drawingManager.addListener('overlaycomplete', function(event) {
+        if (theOnlyPolygon) {
+          theOnlyPolygon.setMap(null)
+          hideListings()
+        }
+
+        drawingManager.setDrawingMode(null)
+
+        theOnlyPolygon = event.overlay
+        theOnlyPolygon.setEditable(true)
+
+        searchWithinPolygon()
+
+        var polygonPath = theOnlyPolygon.getPath()
+        polygonPath.addListener('set_at', searchWithinPolygon)
+        polygonPath.addListener('insert_at', searchWithinPolygon)
+      })
+
+      function searchWithinPolygon() {
+        markers.forEach(function(marker) {
+          if (google.maps.geometry.poly.containsLocation(marker.position, theOnlyPolygon)) marker.setMap(map)
+          else marker.setMap(null)
+        })
+      }
 
       document.querySelector('#show-listings').addEventListener('click', showListings)
       document.querySelector('#hide-listings').addEventListener('click', hideListings)
