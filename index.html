@@ -20,6 +20,16 @@
         text-align: left;
         background: #fff;
       }
+
+      .text {
+        font-size: 12px;
+      }
+
+      #toggle-drawing {
+        width: 27%;
+        position: relative;
+        margin-left: 10px;
+      }
     </style>
   </head>
   <body>
@@ -28,6 +38,9 @@
         <h1>Find your new NYC home</h1>
         <input type="button" value="Show Listings" id="show-listings">
         <input type="button" value="Hide Listings" id="hide-listings">
+        <hr>
+        <span class="text">Draw a shape to search within it for homes!</span>
+        <input type="button" value="Drawing tools" id="toggle-drawing">
       </div>
       <div id="map"></div>
     </div>
@@ -81,8 +94,23 @@
 
       var markers = generateMarkers(map)
 
+      var drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+        drawingControl: true,
+        drawingControlOptions: {
+          position: google.maps.ControlPosition.TOP_LEFT,
+          drawingModes: [
+            google.maps.drawing.OverlayType.POLYGON
+          ]
+        }
+      })
+
       document.querySelector('#show-listings').addEventListener('click', showListings)
       document.querySelector('#hide-listings').addEventListener('click', hideListings)
+
+      document.querySelector('#toggle-drawing').addEventListener('click', function() {
+        toggleDrawing(drawingManager)
+      })
 
       function showListings() {
         var bounds = new google.maps.LatLngBounds()
@@ -102,11 +130,16 @@
           marker.setAnimation(null)
         })
       }
+
+      function toggleDrawing(drawingManager) {
+        if (drawingManager.map) drawingManager.setMap(null)
+        else drawingManager.setMap(map)
+      }
     }
     </script>
 
     <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBONpnUbTddD57RkMLz401RuuvCmCBVqQ&v=3&callback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBONpnUbTddD57RkMLz401RuuvCmCBVqQ&libraries=drawing,geometry&v=3&callback=initMap">
     </script>
   </body>
 </html>
